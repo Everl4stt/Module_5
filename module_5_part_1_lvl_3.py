@@ -12,17 +12,14 @@ class Warrior:
         self.armor = 100
         self.endurance = 100
 
-    def gethp(self):
-        return self.health
-
-    def attack(self, other, wardef):
+    def attack(self, other, defense):
         if self.endurance > 0:
             self.endurance -= 10
-            if other.defense():
-                if other.defense > 0:
+            if defense:
+                if other.armor > 0:
                     dmg = random.randint(0, 10)
                     if dmg < other.armor:
-                        other.defense -= dmg
+                        other.armor -= dmg
                         other.health -= random.randint(0, 20)
                     else:
                         dmg -= other.armor
@@ -34,7 +31,7 @@ class Warrior:
         else:
             other.health -= (random.randint(0, 30) - random.randint(0, 10))
 
-    def defense():
+    def defense(self):
         return True
 
     def __del__(self):
@@ -42,29 +39,34 @@ class Warrior:
 
 warrior1 = Warrior()
 warrior2 = Warrior()
-hp1 = warrior1.gethp()
-hp2 = warrior2.gethp()
-while (hp1 > 10) or (hp2 > 10):
-    wardef = False
+turn = 0
+while (warrior1.health > 10) and (warrior2.health > 10):
+    turn += 1
+    print("Ход номер: ", turn)
+    defense = False
     action1 = random.randint(1, 2)
     action2 = random.randint(1, 2)
     if action1 == 1 and action2 == 2:
-        wardef = warrior2.defense()
-        warrior1.attack(warrior2, wardef)
+        defense = warrior2.defense()
+        warrior1.attack(warrior2, defense)
         print("Первый воин атакует, а второй защищается!")
+        print("Здоровье первого: ", warrior1.health, ", здоровье второго: ", warrior2.health)
     elif action1 == 2 and action2 == 1:
-        wardef = warrior1.defense()
-        warrior2.attack(warrior1, wardef)
+        defense = warrior1.defense()
+        warrior2.attack(warrior1, defense)
         print("Первый воин защищается, а второй атакует!")
-    elif action1 == 1 and action2 == 2:
-        warrior1.attack(warrior2)
-        warrior2.attack(warrior1)
+        print("Здоровье первого: ", warrior1.health, ", здоровье второго: ", warrior2.health)
+    elif action1 == 1 and action2 == 1:
+        warrior1.attack(warrior2, defense)
+        warrior2.attack(warrior1, defense)
         print("Оба воина атакуют!")
+        print("Здоровье первого: ", warrior1.health, ", здоровье второго: ", warrior2.health)
     else:
         print("Оба воина защищаются!")
+        print("Здоровье первого: ", warrior1.health, ", здоровье второго: ", warrior2.health)
 else:
-    if (hp1 > 10) and (hp2 < 10):
-        choice = input("Первый воин победил!\n Добить проигравшего?")
+    if (warrior1.health > 10) and (warrior2.health < 10):
+        choice = input("Первый воин победил!\nДобить проигравшего?\n")
         if choice == "Да" or choice == "да":
             del warrior2
         else:
