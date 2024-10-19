@@ -25,11 +25,11 @@ class Warrior:
                         dmg -= other.armor
                         other.health = other.health - random.randint(0, 20) - dmg
                 else:
-                    other.health -= random.randint(0, 30)
+                    other.health -= random.randint(10, 30)
             else:
-                other.health -= random.randint(0, 30)
+                other.health -= random.randint(10, 30)
         else:
-            other.health -= (random.randint(0, 30) - random.randint(0, 10))
+            other.health -= (random.randint(10, 30) - random.randint(0, 10))
 
     def defense(self):
         return True
@@ -65,14 +65,16 @@ while (warrior1.health > 10) and (warrior2.health > 10):
         print("Оба воина защищаются!")
         print("Здоровье первого: ", warrior1.health, ", здоровье второго: ", warrior2.health)
 else:
-    if (warrior1.health > 10) and (warrior2.health < 10):
+    if (warrior1.health > 10) and (warrior2.health <= 10):
         choice = input("Первый воин победил!\nДобить проигравшего?\n")
         if choice == "Да" or choice == "да":
             del warrior2
         else:
             print("Мудрое решение!")
+    elif warrior1.health < 10 and warrior2.health < 10:
+        print("Ничья!")
     else:
-        choice = input("Второй воин победил!\n Добить проигравшего?")
+        choice = input("Второй воин победил!\nДобить проигравшего?")
         if choice == "Да" or choice == "да":
             del warrior1
         else:
