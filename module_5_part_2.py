@@ -9,7 +9,7 @@ class Model:
         attributes = dict.fromkeys(list(filter(lambda x: not x.startswith('_'), dir(Model))))
         for keys in attributes.keys():
             attributes[keys] = getattr(self, keys)
-        with open('file.json', 'w') as f:
+        with open('file1.json', 'w') as f:
             json.dump(attributes, f)
 
 model = Model()
